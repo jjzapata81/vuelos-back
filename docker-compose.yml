@@ -2,10 +2,27 @@ version: '3'
 
 services:
   db:
-    container_name: mean-db
-    image: mongo:5.0.16
-    volumes:
-      - ./mongo:/data/db
-    ports:
-      - 27017:27017
+    image: postgres
     restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      DATABASE_HOST: 127.0.0.1
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: ${DB_PASSWORDPG}
+      POSTGRES_DB: ${DB_NAMEPG}
+    container_name: vuelosdb
+    volumes:
+      - ./postgres:/var/lib/postgresql/data
+
+  pgadmin:
+    image: dpage/pgadmin4
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "jjzapata81@hotmail.com"
+      PGADMIN_DEFAULT_PASSWORD: "admin"
+    ports:
+      - "8020:80"
+    depends_on:
+      - db
+

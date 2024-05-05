@@ -1,8 +1,8 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { CreateUserDto, LoginDto, RegisterUserDto, UpdateAuthDto } from './dto';
-import { AuthGuard } from './guards/auth.guard';
-
+import { CreateUserDto } from './dto/create-user.dto';
+import { UpdateAuthDto } from './dto/update-auth.dto';
+import { LoginDto } from './dto/login-dto.controller';
 
 @Controller('auth')
 export class AuthController {
@@ -14,13 +14,13 @@ export class AuthController {
   }
 
   @Post('/login')
-  login(@Body() loginDto:LoginDto){
+  login(@Body() loginDto: LoginDto){
     return this.authService.login(loginDto);
   }
 
-  @Post('/register')
-  registerUser(@Body() registerUserDto:RegisterUserDto){
-    return this.authService.registerUser(registerUserDto);
+  @Get()
+  findAll() {
+    return this.authService.findAll();
   }
 
   @Get(':id')
@@ -28,10 +28,13 @@ export class AuthController {
     return this.authService.findOne(+id);
   }
 
-  @UseGuards(AuthGuard)
-  @Get()
-  findAll(){
-    return this.authService.findAll();
+  @Patch(':id')
+  update(@Param('id') id: string, @Body() updateAuthDto: UpdateAuthDto) {
+    return this.authService.update(+id, updateAuthDto);
   }
 
+  @Delete(':id')
+  remove(@Param('id') id: string) {
+    return this.authService.remove(+id);
+  }
 }
