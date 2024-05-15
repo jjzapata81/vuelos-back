@@ -33,7 +33,7 @@ export class AuthGuard implements CanActivate {
     if(!user || !user.isActive){
       throw new UnauthorizedException('User not exists');
     }
-    request.body = user;
+    request.body['user'] = user;
     return Promise.resolve(true);
   }
   extractToken(request: Request):string | undefined {
