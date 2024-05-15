@@ -12,11 +12,17 @@ import { JwtPayload } from './interfaces/jwt-payload';
 @Injectable()
 export class AuthService {
   
+  
   constructor(
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
     private jwtService: JwtService
   ) {}
+
+  async findById(id: number) {
+    const { password, ...user } = await this.userRepository.findOneBy({id});
+    return user;
+  }
 
   async create(createUserDto: CreateUserDto) {
     try{

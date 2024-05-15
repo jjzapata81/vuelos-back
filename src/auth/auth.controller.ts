@@ -19,8 +19,8 @@ export class AuthController {
     return this.authService.login(loginDto);
   }
 
-  @UseGuards(AuthGuard)
   @Get()
+  @UseGuards(AuthGuard)
   findAll(@Request() request: Request) {
     console.log(request.body)
     return this.authService.findAll();
