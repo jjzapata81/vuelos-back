@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Ticket } from "src/flights/entities/ticket.entity";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class User {
@@ -28,6 +29,13 @@ export class User {
         default: ['user']
     })
     roles: UserRole[];
+
+    @OneToMany(
+        () => Ticket,
+        ticket => ticket.user,
+        { cascade:true }
+    )
+    tickets?: Ticket[];
 }
 
 export enum UserRole {
