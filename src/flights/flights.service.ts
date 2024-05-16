@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { CreateFlightDto } from './dto/create-flight.dto';
 import { UpdateFlightDto } from './dto/update-flight.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -15,16 +15,18 @@ export class FlightsService {
     private readonly flightRepository: Repository<Flight>,
     @InjectRepository(Seat)
     private readonly seatRepository: Repository<Seat>
-  ){
-
-  }
+  ){}
 
   async create(createFlightDto: CreateFlightDto) {
-    const flight = this.flightRepository.create({
-      ...createFlightDto,
-      seats: SEATS.map( seat => this.seatRepository.create(seat))
-    });
-    return this.flightRepository.save(flight);
+    try{
+      const flight = this.flightRepository.create({
+        ...createFlightDto,
+        seats: SEATS.map( seat => this.seatRepository.create(seat))
+      });
+      return await this.flightRepository.save(flight);
+    }catch(error){
+      throw new BadRequestException();
+    }
   }
 
   async findAll() {
