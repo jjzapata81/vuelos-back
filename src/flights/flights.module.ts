@@ -5,6 +5,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Flight } from './entities/flight.entity';
 import { Seat } from './entities/seats.entity';
 import { Ticket } from './entities/ticket.entity';
+import { User } from 'src/auth/entities/user.entity';
 
 @Module({
   controllers: [FlightsController],
@@ -13,7 +14,8 @@ import { Ticket } from './entities/ticket.entity';
     TypeOrmModule.forFeature([
       Flight,
       Seat,
-      Ticket
+      Ticket,
+      User
     ])
   ]
 })

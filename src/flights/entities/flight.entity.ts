@@ -40,7 +40,7 @@ export class Flight {
     @OneToMany(
         () => Ticket,
         ticket => ticket.flight,
-        { cascade:true }
+        { cascade:true, eager:true }
     )
     tickets?: Ticket[];
 

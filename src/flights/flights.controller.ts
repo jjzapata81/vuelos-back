@@ -1,7 +1,8 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Put, NotFoundException } from '@nestjs/common';
 import { FlightsService } from './flights.service';
 import { CreateFlightDto } from './dto/create-flight.dto';
-import { UpdateFlightDto } from './dto/update-flight.dto';
+import { TicketDto } from './dto/ticket.dto';
+import { TicketAction } from 'src/enums/ticket-action.enum';
 
 @Controller('flights')
 export class FlightsController {
@@ -22,13 +23,12 @@ export class FlightsController {
     return this.flightsService.findOne(id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateFlightDto: UpdateFlightDto) {
-    return this.flightsService.update(+id, updateFlightDto);
+  @Put(':action/:code')
+  update(@Param('action') action: TicketAction, @Param('code') code: string, @Body() ticketDto: TicketDto){
+    if(action!==TicketAction.BUY && action!==TicketAction.RESERVE){
+      throw new NotFoundException();
+    }
+    return this.flightsService.update(action, code, ticketDto);
   }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.flightsService.remove(+id);
-  }
+  
 }

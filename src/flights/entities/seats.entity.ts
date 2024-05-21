@@ -1,6 +1,7 @@
 import { SeatState } from "src/enums/seat-state.enum";
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, ManyToOne, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Flight } from "./flight.entity";
+import { Ticket } from "./ticket.entity";
 
 
 @Entity()
