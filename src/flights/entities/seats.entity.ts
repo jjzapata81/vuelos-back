@@ -24,7 +24,8 @@ export class Seat{
 
     @ManyToOne(
         () => Flight,
-        flight => flight.seats
+        flight => flight.seats,
+        
     )
     flight: Flight;
 }

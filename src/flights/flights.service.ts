@@ -30,20 +30,11 @@ export class FlightsService {
   }
 
   async findAll() {
-    return this.flightRepository.find({
-      relations:{
-        seats:true
-      }
-    });
+    return this.flightRepository.find();
   }
 
-  findOne(code: string) {
-    return this.flightRepository.find({
-      where:[{code}],
-      relations:{
-        seats:true
-      }
-    });
+  async findOne(code: string) {
+    return this.flightRepository.findBy({code});
   }
 
   update(id: number, updateFlightDto: UpdateFlightDto) {

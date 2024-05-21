@@ -33,7 +33,7 @@ export class Flight {
     @OneToMany(
         () => Seat, 
         seat => seat.flight,
-        { cascade: true}
+        { cascade: true, eager:true }
     )
     seats?: Seat[];
 
