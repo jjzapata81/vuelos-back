@@ -30,6 +30,9 @@ export class Flight {
     @Column({type:'time'})
     arriveTime:string;
 
+    @Column('decimal')
+    priceBase: number;
+
     @OneToMany(
         () => Seat, 
         seat => seat.flight,

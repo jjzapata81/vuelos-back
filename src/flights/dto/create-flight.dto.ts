@@ -1,4 +1,4 @@
-import { IsString } from "class-validator";
+import { IsNumber, IsString } from "class-validator";
 
 export class CreateFlightDto {
 
@@ -22,5 +22,8 @@ export class CreateFlightDto {
 
     @IsString()
     arriveTime:string;
+
+    @IsNumber({maxDecimalPlaces: 2})
+    priceBase: number;
 
 }
