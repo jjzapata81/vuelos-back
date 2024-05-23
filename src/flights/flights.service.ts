@@ -54,6 +54,16 @@ export class FlightsService {
     return flight;
   }
 
+  async findByCity(from: string, to:string) {
+    const flight = await this.flightRepository.find({
+      where:{from, to},
+    });
+    if(flight.length===0){
+      throw new NotFoundException(`No existe un vuelo con los criterios de búsqueda`);
+    }
+    return flight;
+  }
+
   async update(action: TicketAction, code: string, ticketDto: TicketDto) {
     const { seat, ...flight } = await this.findOneWithSeat(code, ticketDto.seatCode);
     const user = await this.findUser(ticketDto.email);

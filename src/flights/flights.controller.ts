@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Put, NotFoundException } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Put, NotFoundException, Query } from '@nestjs/common';
 import { FlightsService } from './flights.service';
 import { CreateFlightDto } from './dto/create-flight.dto';
 import { TicketDto } from './dto/ticket.dto';
@@ -18,9 +18,14 @@ export class FlightsController {
     return this.flightsService.findAll();
   }
 
-  @Get(':id')
+  @Get('find/:id')
   findOne(@Param('id') id: string) {
     return this.flightsService.findOne(id);
+  }
+
+  @Get('find')
+  findByCity(@Query('from') from:string,  @Query('to') to: string) {
+    return this.flightsService.findByCity(from, to);
   }
 
   @Put(':action/:code')
